@@ -1,0 +1,741 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>BEAST MODE GYM</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: #0b0b0b;
+            color: #fff;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            padding: 20px 7%;
+
+            background: rgba(0, 0, 0, .9);
+            border-bottom: 1px solid #222;
+        }
+
+        .logo {
+            font-size: 27px;
+            font-weight: 900;
+            font-style: italic;
+        }
+
+        .logo span {
+            color: #ff2b2b;
+        }
+
+        nav {
+            display: flex;
+            gap: 30px;
+        }
+
+        nav a {
+            color: #ddd;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        nav a:hover {
+            color: #ff2b2b;
+        }
+
+        .join-btn {
+            background: #ff2b2b;
+            color: white;
+            text-decoration: none;
+            padding: 12px 22px;
+            font-weight: bold;
+            clip-path: polygon(
+                8% 0,
+                100% 0,
+                92% 100%,
+                0 100%
+            );
+        }
+
+        /* ================= HERO ================= */
+
+        .hero {
+            min-height: 100vh;
+
+            display: flex;
+            align-items: center;
+
+            padding: 130px 7% 70px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #000 0%,
+                    rgba(0,0,0,.8) 40%,
+                    rgba(0,0,0,.25) 100%
+                ),
+                url("https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=1800&q=85");
+
+            background-size: cover;
+            background-position: center;
+        }
+
+        .hero-content {
+            max-width: 700px;
+        }
+
+        .hero-content small {
+            color: #ff2b2b;
+            font-size: 16px;
+            font-weight: 900;
+            letter-spacing: 4px;
+        }
+
+        .hero h1 {
+            font-size: clamp(55px, 8vw, 110px);
+            line-height: .88;
+            font-weight: 900;
+            font-style: italic;
+            text-transform: uppercase;
+
+            margin: 25px 0;
+        }
+
+        .hero h1 span {
+            color: #ff2b2b;
+        }
+
+        .hero p {
+            color: #bbb;
+            font-size: 18px;
+            line-height: 1.7;
+            max-width: 550px;
+            margin-bottom: 35px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 16px 28px;
+            text-decoration: none;
+            font-weight: 900;
+            text-transform: uppercase;
+            transition: .3s;
+        }
+
+        .btn-red {
+            background: #ff2b2b;
+            color: white;
+        }
+
+        .btn-red:hover {
+            background: white;
+            color: #111;
+        }
+
+        .btn-outline {
+            border: 1px solid #777;
+            color: white;
+        }
+
+        .btn-outline:hover {
+            border-color: #ff2b2b;
+            color: #ff2b2b;
+        }
+
+        /* ================= GENERAL ================= */
+
+        section {
+            padding: 100px 7%;
+        }
+
+        .title {
+            margin-bottom: 55px;
+        }
+
+        .title small {
+            color: #ff2b2b;
+            font-weight: bold;
+            letter-spacing: 3px;
+        }
+
+        .title h2 {
+            font-size: 50px;
+            font-style: italic;
+            text-transform: uppercase;
+            margin-top: 10px;
+        }
+
+        .title p {
+            color: #888;
+            max-width: 600px;
+            margin-top: 15px;
+            line-height: 1.7;
+        }
+
+        /* ================= CATEGORIES ================= */
+
+        .categories {
+            background: #111;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .category {
+            height: 350px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .category img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%);
+            transition: .5s;
+        }
+
+        .category:hover img {
+            transform: scale(1.08);
+            filter: grayscale(0);
+        }
+
+        .category-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+
+            padding: 25px;
+
+            background: linear-gradient(
+                transparent,
+                rgba(0,0,0,.95)
+            );
+        }
+
+        .category h3 {
+            font-size: 25px;
+            font-style: italic;
+            text-transform: uppercase;
+        }
+
+        .category p {
+            color: #aaa;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        /* ================= ABOUT ================= */
+
+        .about {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 70px;
+            align-items: center;
+        }
+
+        .about-image {
+            position: relative;
+        }
+
+        .about-image img {
+            width: 100%;
+            height: 550px;
+            object-fit: cover;
+        }
+
+        .experience {
+            position: absolute;
+            bottom: -25px;
+            right: -25px;
+
+            background: #ff2b2b;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .experience strong {
+            display: block;
+            font-size: 40px;
+        }
+
+        .experience span {
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .about-text h2 {
+            font-size: 52px;
+            font-style: italic;
+            text-transform: uppercase;
+            margin-bottom: 25px;
+        }
+
+        .about-text h2 span {
+            color: #ff2b2b;
+        }
+
+        .about-text p {
+            color: #999;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .check-list {
+            list-style: none;
+            margin: 25px 0;
+        }
+
+        .check-list li {
+            padding: 9px 0;
+            color: #ddd;
+        }
+
+        .check-list li::before {
+            content: "✓";
+            color: #ff2b2b;
+            font-weight: bold;
+            margin-right: 12px;
+        }
+
+        /* ================= STATS ================= */
+
+        .stats {
+            background: #ff2b2b;
+
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+
+            padding-top: 60px;
+            padding-bottom: 60px;
+        }
+
+        .stat {
+            text-align: center;
+            border-right: 1px solid rgba(255,255,255,.3);
+        }
+
+        .stat:last-child {
+            border: none;
+        }
+
+        .stat strong {
+            font-size: 45px;
+            font-style: italic;
+        }
+
+        .stat p {
+            font-size: 13px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        /* ================= PRICING ================= */
+
+        .pricing {
+            background: #111;
+        }
+
+        .plans {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .plan {
+            background: #181818;
+            padding: 40px;
+            border: 1px solid #292929;
+        }
+
+        .plan.featured {
+            border: 2px solid #ff2b2b;
+            transform: translateY(-15px);
+        }
+
+        .plan-label {
+            color: #ff2b2b;
+            font-size: 12px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .plan h3 {
+            font-size: 30px;
+            font-style: italic;
+            text-transform: uppercase;
+            margin: 15px 0;
+        }
+
+        .price {
+            font-size: 50px;
+            font-weight: 900;
+            margin-bottom: 25px;
+        }
+
+        .price span {
+            color: #777;
+            font-size: 14px;
+            font-weight: normal;
+        }
+
+        .plan ul {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+
+        .plan li {
+            color: #999;
+            padding: 11px 0;
+            border-bottom: 1px solid #292929;
+        }
+
+        .plan li::before {
+            content: "→";
+            color: #ff2b2b;
+            margin-right: 10px;
+        }
+
+        .plan a {
+            display: block;
+            text-align: center;
+            background: #252525;
+            color: white;
+            padding: 15px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .plan.featured a {
+            background: #ff2b2b;
+        }
+
+        /* ================= TRAINERS ================= */
+
+        .trainers {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .trainer {
+            background: #151515;
+        }
+
+        .trainer img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            filter: grayscale(100%);
+            transition: .4s;
+        }
+
+        .trainer:hover img {
+            filter: grayscale(0);
+        }
+
+        .trainer-info {
+            padding: 25px;
+        }
+
+        .trainer-info h3 {
+            font-size: 25px;
+            font-style: italic;
+        }
+
+        .trainer-info p {
+            color: #ff2b2b;
+            margin-top: 5px;
+            font-size: 13px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        /* ================= BMI ================= */
+
+        .bmi-section {
+            background:
+                linear-gradient(
+                    rgba(0,0,0,.85),
+                    rgba(0,0,0,.85)
+                ),
+                url("https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1800&q=85");
+
+            background-size: cover;
+            background-position: center;
+        }
+
+        .bmi-box {
+            max-width: 600px;
+            margin: auto;
+            padding: 45px;
+
+            background: rgba(20,20,20,.95);
+            border: 1px solid #333;
+        }
+
+        .bmi-box h2 {
+            font-size: 35px;
+            font-style: italic;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .bmi-box input {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 15px;
+
+            background: #0d0d0d;
+            border: 1px solid #333;
+            color: white;
+            outline: none;
+        }
+
+        .bmi-box button {
+            width: 100%;
+            padding: 15px;
+            background: #ff2b2b;
+            color: white;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        #bmiResult {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 20px;
+            color: #ff2b2b;
+            font-weight: bold;
+        }
+
+        /* ================= CONTACT ================= */
+
+        .contact {
+            background: #111;
+        }
+
+        .contact-form {
+            max-width: 850px;
+            margin: auto;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            background: #181818;
+            border: 1px solid #292929;
+            color: white;
+            padding: 16px;
+            margin-bottom: 15px;
+            outline: none;
+        }
+
+        .contact-form textarea {
+            height: 160px;
+            resize: none;
+        }
+
+        .contact-form button {
+            border: none;
+            cursor: pointer;
+            padding: 16px 30px;
+            background: #ff2b2b;
+            color: white;
+            font-weight: bold;
+        }
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            background: #050505;
+            padding: 35px 7%;
+
+            display: flex;
+            justify-content: space-between;
+
+            color: #666;
+            font-size: 13px;
+        }
+
+        footer span {
+            color: #ff2b2b;
+        }
+
+        /* ================= MOBILE ================= */
+
+        @media(max-width: 900px) {
+
+            nav {
+                display: none;
+            }
+
+            .category-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .about {
+                grid-template-columns: 1fr;
+            }
+
+            .plans,
+            .trainers {
+                grid-template-columns: 1fr;
+            }
+
+            .plan.featured {
+                transform: none;
+            }
+
+            .stats {
+                grid-template-columns: 1fr 1fr;
+                gap: 25px;
+            }
+
+            .stat {
+                border: none;
+            }
+        }
+
+        @media(max-width: 600px) {
+
+            section {
+                padding: 75px 5%;
+            }
+
+            header {
+                padding: 18px 5%;
+            }
+
+            .join-btn {
+                display: none;
+            }
+
+            .hero {
+                padding-left: 5%;
+                padding-right: 5%;
+            }
+
+            .hero h1 {
+                font-size: 58px;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .hero-buttons a {
+                text-align: center;
+            }
+
+            .category-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .title h2 {
+                font-size: 38px;
+            }
+
+            footer {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+
+    <header>
+
+        <div class="logo">
+            BEAST<span>MODE</span>
+        </div>
+
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#programs">Programs</a>
+            <a href="#about">About</a>
+            <a href="#plans">Plans</a>
+            <a href="#trainers">Trainers</a>
+            <a href="#contact">Contact</a>
+        </nav>
+
+        <a href="#plans" class="join-btn">
+            Join Now
+        </a>
+
+    </header>
+
+
+    <!-- ================= HERO ================= -->
+
+    <section class="hero" id="home">
+
+        <div class="hero-content">
+
+            <small>NO EXCUSES. JUST RESULTS.</small>
+
+            <h1>
+                UNLEASH<br>
+                YOUR <span>POWER.</span>
+            </h1>
+
+            <p>
+                Train harder. Move faster. Become stronger.
+                Beast Mode Gym gives you the environment,
+                equipment and coaching to transform yourself.
+            </p>
